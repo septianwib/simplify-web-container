@@ -1,7 +1,7 @@
 # simplify-web-container
 
 ## Introduction
-This project is to install, configure and run a docker container by using ansible playbook in a single run
+This project is to install, configure and run a nginx container by using ansible playbook in a single run.
 
 ## Requirement
 - System requirement
