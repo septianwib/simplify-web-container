@@ -32,7 +32,7 @@
         dest: "/apps/www"
       tags: 
            - copyfile
-    - name: pull an image
+    - name: Pull NGINX docker image
       docker_image:
         name: nginx
       tags:
