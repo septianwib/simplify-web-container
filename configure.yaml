@@ -1,0 +1,49 @@
+- hosts: appsclient
+  user: apps
+  become: True
+  tasks:
+    - name: Install library
+      yum:
+        name: 
+           - epel-release 
+           - git
+           - docker
+           - python-docker-py
+        state: present
+        update_cache: True
+      tags: 
+           - install
+    - name: Starting service
+      service:
+        name: "docker"
+        state: started
+        enabled: yes
+      tags: 
+           - startservice
+    - name: Create remote directory
+      file: 
+        path: "/apps/www"
+        state: directory
+      tags: 
+           - createdir
+    - name: Copy HTML file
+      copy:
+        src: "/apps/repo/www/html/index.html"
+        dest: "/apps/www"
+      tags: 
+           - copyfile
+    - name: pull an image
+      docker_image:
+        name: nginx
+      tags:
+           - pullimage
+    - name: Creating container using NGINX image
+      docker_container:
+        name: "nginx-app"
+        image: "nginx"
+        state: started
+        exposed_ports: "80"
+        ports: "313:80"
+        volumes: /apps/www:/usr/share/nginx/html
+      tags: 
+           - rundocker
